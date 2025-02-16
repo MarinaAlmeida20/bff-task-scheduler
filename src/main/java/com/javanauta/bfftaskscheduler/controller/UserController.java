@@ -1,7 +1,9 @@
 package com.javanauta.bfftaskscheduler.controller;
 
 import com.javanauta.bfftaskscheduler.business.UserService;
-import com.javanauta.bfftaskscheduler.business.dto.UserDTO;
+import com.javanauta.bfftaskscheduler.business.dto.in.LoginRequestDTO;
+import com.javanauta.bfftaskscheduler.business.dto.in.UserDTORequest;
+import com.javanauta.bfftaskscheduler.business.dto.out.UserDTOResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,8 +24,8 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "User success saved")
     @ApiResponse(responseCode = "400", description = "User already registered")
     @ApiResponse(responseCode = "500", description = "Server error")
-    public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO){
-        return ResponseEntity.ok(userService.saveUser(userDTO));
+    public ResponseEntity<UserDTOResponse> saveUser(@RequestBody UserDTORequest userDTORequest){
+        return ResponseEntity.ok(userService.saveUser(userDTORequest));
     }
 
     @PostMapping("/login")
@@ -31,8 +33,8 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "User success logged in")
     @ApiResponse(responseCode = "401", description = "Invalid details")
     @ApiResponse(responseCode = "500", description = "Server error")
-    public String login(@RequestBody UserDTO userDTO){
-        return userService.loginUser(userDTO);
+    public String login(@RequestBody LoginRequestDTO loginRequestDTO){
+        return userService.loginUser(loginRequestDTO);
     }
 
     @GetMapping
@@ -40,8 +42,8 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "User found")
     @ApiResponse(responseCode = "404", description = "User not registered")
     @ApiResponse(responseCode = "500", description = "Server error")
-    public ResponseEntity<UserDTO> finUserByEmail(@RequestParam("email") String email,
-                                                  @RequestHeader(value = "Authorization", required = false) String token){
+    public ResponseEntity<UserDTOResponse> finUserByEmail(@RequestParam("email") String email,
+                                                         @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(userService.findUserByEmail(email, token));
     }
 
@@ -62,9 +64,9 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "User success updated")
     @ApiResponse(responseCode = "404", description = "User not registered")
     @ApiResponse(responseCode = "500", description = "Server error")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO,
-                                              @RequestHeader(value = "Authorization", required = false) String token){
-        return ResponseEntity.ok(userService.updateUserData(token, userDTO));
+    public ResponseEntity<UserDTOResponse> updateUser(@RequestBody UserDTORequest userDTORequest,
+                                                      @RequestHeader(value = "Authorization", required = false) String token){
+        return ResponseEntity.ok(userService.updateUserData(token, userDTORequest));
     }
 
 

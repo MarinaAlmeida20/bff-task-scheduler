@@ -1,7 +1,8 @@
 package com.javanauta.bfftaskscheduler.business;
 
 
-import com.javanauta.bfftaskscheduler.business.dto.TaskDTO;
+import com.javanauta.bfftaskscheduler.business.dto.in.TaskDTORequest;
+import com.javanauta.bfftaskscheduler.business.dto.out.TaskDTOResponse;
 import com.javanauta.bfftaskscheduler.infrastructure.client.TaskClient;
 import com.javanauta.bfftaskscheduler.infrastructure.enums.NotificationStatusEnum;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +17,17 @@ public class TaskService {
 
     private final TaskClient taskClient;
 
-    public TaskDTO saveTask(String token, TaskDTO taskDTO) {
+    public TaskDTOResponse saveTask(String token, TaskDTORequest taskDTO) {
         return taskClient.createTask(taskDTO, token);
     }
 
-    public List<TaskDTO> findTaskSchedulerByPeriod(LocalDateTime startDate,
-                                                   LocalDateTime endDate,
-                                                   String token) {
+    public List<TaskDTOResponse> findTaskSchedulerByPeriod(LocalDateTime startDate,
+                                                           LocalDateTime endDate,
+                                                           String token) {
         return taskClient.findListTaskByPeriod(startDate, endDate, token);
     }
 
-    public List<TaskDTO> findTasksByEmail(String token) {
+    public List<TaskDTOResponse> findTasksByEmail(String token) {
         return taskClient.findListByEmail(token);
     }
 
@@ -34,13 +35,13 @@ public class TaskService {
         taskClient.deleteTask(id, token);
     }
 
-    public TaskDTO updateStatus(NotificationStatusEnum statusEnum,
-                                String id,
-                                String token) {
+    public TaskDTOResponse updateStatus(NotificationStatusEnum statusEnum,
+                                        String id,
+                                        String token) {
         return taskClient.updateStatusNotification(statusEnum, id, token);
     }
 
-    public TaskDTO updateTask(TaskDTO dto, String id, String token) {
+    public TaskDTOResponse updateTask(TaskDTORequest dto, String id, String token) {
         return taskClient.updateTask(dto, id, token);
     }
 }

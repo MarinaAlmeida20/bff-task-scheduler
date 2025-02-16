@@ -1,4 +1,4 @@
-package com.javanauta.bfftaskscheduler.business.dto;
+package com.javanauta.bfftaskscheduler.business.dto.in;
 
 import lombok.*;
 
@@ -7,9 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AddressDTO {
+public class AddressDTORequest {
 
-    private Long id;
     private String road;
     private String number;
     private String city;

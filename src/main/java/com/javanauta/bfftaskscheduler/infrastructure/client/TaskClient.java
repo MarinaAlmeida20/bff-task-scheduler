@@ -1,6 +1,7 @@
 package com.javanauta.bfftaskscheduler.infrastructure.client;
 
-import com.javanauta.bfftaskscheduler.business.dto.TaskDTO;
+import com.javanauta.bfftaskscheduler.business.dto.in.TaskDTORequest;
+import com.javanauta.bfftaskscheduler.business.dto.out.TaskDTOResponse;
 import com.javanauta.bfftaskscheduler.infrastructure.enums.NotificationStatusEnum;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,11 +14,11 @@ import java.util.List;
 public interface TaskClient {
 
     @PostMapping
-    TaskDTO createTask(@RequestBody TaskDTO taskDTO,
-                       @RequestHeader(value = "Authorization", required = false) String token);
+    TaskDTOResponse createTask(@RequestBody TaskDTORequest taskDTO,
+                               @RequestHeader(value = "Authorization", required = false) String token);
 
     @GetMapping("/events")
-    List<TaskDTO> findListTaskByPeriod(
+    List<TaskDTOResponse> findListTaskByPeriod(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateCreated,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateUpdated,
 //            @RequestParam NotificationStatusEnum statusEnum,
@@ -25,7 +26,7 @@ public interface TaskClient {
     );
 
     @GetMapping
-    List<TaskDTO> findListByEmail(
+    List<TaskDTOResponse> findListByEmail(
             @RequestHeader(value = "Authorization", required = false) String token);
 
     @DeleteMapping
@@ -33,13 +34,13 @@ public interface TaskClient {
                     @RequestHeader(value = "Authorization", required = false) String token);
 
     @PatchMapping
-    TaskDTO updateStatusNotification(
+    TaskDTOResponse updateStatusNotification(
             @RequestParam("status") NotificationStatusEnum statusEnum,
             @RequestParam("id") String id,
             @RequestHeader(value = "Authorization", required = false) String token);
 
     @PutMapping
-    TaskDTO updateTask(@RequestBody TaskDTO dto,
-                       @RequestParam("id") String id,
-                       @RequestHeader(value = "Authorization", required = false) String token);
+    TaskDTOResponse updateTask(@RequestBody TaskDTORequest dto,
+                               @RequestParam("id") String id,
+                               @RequestHeader(value = "Authorization", required = false) String token);
 }

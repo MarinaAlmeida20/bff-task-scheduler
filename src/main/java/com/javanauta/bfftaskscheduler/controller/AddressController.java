@@ -2,7 +2,8 @@ package com.javanauta.bfftaskscheduler.controller;
 
 
 import com.javanauta.bfftaskscheduler.business.UserService;
-import com.javanauta.bfftaskscheduler.business.dto.AddressDTO;
+import com.javanauta.bfftaskscheduler.business.dto.in.AddressDTORequest;
+import com.javanauta.bfftaskscheduler.business.dto.out.AddressDTOResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,9 +24,9 @@ public class AddressController {
     @ApiResponse(responseCode = "200", description = "Address success saved")
     @ApiResponse(responseCode = "404", description = "User not found")
     @ApiResponse(responseCode = "500", description = "Server error")
-    public ResponseEntity<AddressDTO> addToAddress(@RequestBody AddressDTO addressDTO,
-                                                   @RequestHeader(value = "Authorization", required = false) String token){
-        return ResponseEntity.ok(userService.addToAddress(token, addressDTO));
+    public ResponseEntity<AddressDTOResponse> addToAddress(@RequestBody AddressDTORequest addressDTORequest,
+                                                           @RequestHeader(value = "Authorization", required = false) String token){
+        return ResponseEntity.ok(userService.addToAddress(token, addressDTORequest));
     }
 
     @PutMapping("/address")
@@ -33,9 +34,9 @@ public class AddressController {
     @ApiResponse(responseCode = "200", description = "Address success updated")
     @ApiResponse(responseCode = "404", description = "User not found")
     @ApiResponse(responseCode = "500", description = "Server error")
-    public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO,
-                                                    @RequestParam("id") Long id,
-                                                    @RequestHeader(value = "Authorization", required = false) String token){
-        return ResponseEntity.ok(userService.updateAddress(id, addressDTO, token));
+    public ResponseEntity<AddressDTOResponse> updateAddress(@RequestBody AddressDTORequest addressDTORequest,
+                                                           @RequestParam("id") Long id,
+                                                           @RequestHeader(value = "Authorization", required = false) String token){
+        return ResponseEntity.ok(userService.updateAddress(id, addressDTORequest, token));
     }
 }

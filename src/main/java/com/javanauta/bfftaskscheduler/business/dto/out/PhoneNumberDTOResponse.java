@@ -1,4 +1,4 @@
-package com.javanauta.bfftaskscheduler.business.dto;
+package com.javanauta.bfftaskscheduler.business.dto.out;
 
 import lombok.*;
 
@@ -7,9 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PhoneNumberDTO {
+public class PhoneNumberDTOResponse {
 
-    private Long id;
     private String number;
 
 }

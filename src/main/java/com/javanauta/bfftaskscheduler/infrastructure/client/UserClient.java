@@ -1,8 +1,12 @@
 package com.javanauta.bfftaskscheduler.infrastructure.client;
 
-import com.javanauta.bfftaskscheduler.business.dto.AddressDTO;
-import com.javanauta.bfftaskscheduler.business.dto.PhoneNumberDTO;
-import com.javanauta.bfftaskscheduler.business.dto.UserDTO;
+import com.javanauta.bfftaskscheduler.business.dto.in.AddressDTORequest;
+import com.javanauta.bfftaskscheduler.business.dto.in.LoginRequestDTO;
+import com.javanauta.bfftaskscheduler.business.dto.in.PhoneNumberDTORequest;
+import com.javanauta.bfftaskscheduler.business.dto.in.UserDTORequest;
+import com.javanauta.bfftaskscheduler.business.dto.out.AddressDTOResponse;
+import com.javanauta.bfftaskscheduler.business.dto.out.PhoneNumberDTOResponse;
+import com.javanauta.bfftaskscheduler.business.dto.out.UserDTOResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 public interface UserClient {
 
     @GetMapping
-    UserDTO findUserByEmail(@RequestParam("email") String email,
-                            @RequestHeader(value = "Authorization", required = false) String token);
+    UserDTOResponse findUserByEmail(@RequestParam("email") String email,
+                                   @RequestHeader(value = "Authorization", required = false) String token);
 
     @PostMapping
-    UserDTO saveUser(@RequestBody UserDTO userDTO);
+    UserDTOResponse saveUser(@RequestBody UserDTORequest userDTORequest);
 
     @PostMapping("/login")
-    String login(@RequestBody UserDTO userDTO);
+    String login(@RequestBody LoginRequestDTO loginRequestDTO);
 
 
     @DeleteMapping("/{email}")
@@ -25,24 +29,24 @@ public interface UserClient {
                            @RequestHeader(value = "Authorization", required = false) String token);
 
     @PutMapping
-    UserDTO updateUser(@RequestBody UserDTO userDTO,
-                       @RequestHeader(value = "Authorization", required = false) String token);
+    UserDTOResponse updateUser(@RequestBody UserDTORequest userDTORequest,
+                              @RequestHeader(value = "Authorization", required = false) String token);
 
     @PostMapping("/phoneNumber")
-    PhoneNumberDTO addToPhoneNumber(@RequestBody PhoneNumberDTO phoneNumberDTO,
-                                    @RequestHeader(value = "Authorization", required = false) String token);
+    PhoneNumberDTOResponse addToPhoneNumber(@RequestBody PhoneNumberDTORequest phoneNumberDTORequest,
+                                            @RequestHeader(value = "Authorization", required = false) String token);
 
     @PutMapping("/phoneNumber")
-    PhoneNumberDTO updatePhoneNumber(@RequestBody PhoneNumberDTO phoneNumberDTO,
-                                     @RequestParam("id") Long id,
-                                     @RequestHeader(value = "Authorization", required = false) String token);
+    PhoneNumberDTOResponse updatePhoneNumber(@RequestBody PhoneNumberDTORequest phoneNumberDTORequest,
+                                            @RequestParam("id") Long id,
+                                            @RequestHeader(value = "Authorization", required = false) String token);
 
     @PostMapping("/address")
-    AddressDTO addToAddress(@RequestBody AddressDTO addressDTO,
-                            @RequestHeader(value = "Authorization", required = false) String token);
+    AddressDTOResponse addToAddress(@RequestBody AddressDTORequest addressDTORequest,
+                                    @RequestHeader(value = "Authorization", required = false) String token);
 
     @PutMapping("/address")
-    AddressDTO updateAddress(@RequestBody AddressDTO addressDTO,
-                             @RequestParam("id") Long id,
-                             @RequestHeader(value = "Authorization", required = false) String token);
+    AddressDTOResponse updateAddress(@RequestBody AddressDTORequest addressDTORequest,
+                                    @RequestParam("id") Long id,
+                                    @RequestHeader(value = "Authorization", required = false) String token);
 }
