@@ -41,7 +41,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "User not registered")
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<UserDTO> finUserByEmail(@RequestParam("email") String email,
-                                                  @RequestHeader("Authorization") String token){
+                                                  @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(userService.findUserByEmail(email, token));
     }
 
@@ -51,7 +51,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "User already registered")
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<Void> deleteUserByEmail(@PathVariable String email,
-                                                  @RequestHeader("Authorization") String token){
+                                                  @RequestHeader(value = "Authorization", required = false) String token){
         userService.deleteUserByEmail(email, token);
         return ResponseEntity.ok().build();
     }
@@ -63,7 +63,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "User not registered")
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO,
-                                              @RequestHeader("Authorization") String token){
+                                              @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(userService.updateUserData(token, userDTO));
     }
 

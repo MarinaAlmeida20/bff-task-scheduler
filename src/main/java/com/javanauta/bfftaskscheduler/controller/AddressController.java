@@ -24,7 +24,7 @@ public class AddressController {
     @ApiResponse(responseCode = "404", description = "User not found")
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<AddressDTO> addToAddress(@RequestBody AddressDTO addressDTO,
-                                                   @RequestHeader("Authorization") String token){
+                                                   @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(userService.addToAddress(token, addressDTO));
     }
 
@@ -35,7 +35,7 @@ public class AddressController {
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO,
                                                     @RequestParam("id") Long id,
-                                                    @RequestHeader("Authorization") String token){
+                                                    @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(userService.updateAddress(id, addressDTO, token));
     }
 }

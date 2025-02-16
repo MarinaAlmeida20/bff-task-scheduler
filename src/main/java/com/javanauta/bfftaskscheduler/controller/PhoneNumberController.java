@@ -23,7 +23,7 @@ public class PhoneNumberController {
     @ApiResponse(responseCode = "404", description = "User not found")
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<PhoneNumberDTO> addToPhoneNumber(@RequestBody PhoneNumberDTO phoneNumberDTO,
-                                                           @RequestHeader("Authorization") String token){
+                                                           @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(userService.addToPhoneNumber(token, phoneNumberDTO));
     }
 
@@ -34,7 +34,7 @@ public class PhoneNumberController {
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<PhoneNumberDTO> updatePhoneNumber(@RequestBody PhoneNumberDTO phoneNumberDTO,
                                                             @RequestParam("id") Long id,
-                                                            @RequestHeader("Authorization") String token){
+                                                            @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(userService.updatePhoneNumber(id, phoneNumberDTO, token));
     }
 }

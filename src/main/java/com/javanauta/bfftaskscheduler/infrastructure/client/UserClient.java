@@ -11,7 +11,7 @@ public interface UserClient {
 
     @GetMapping
     UserDTO findUserByEmail(@RequestParam("email") String email,
-                            @RequestHeader("Authorization") String token);
+                            @RequestHeader(value = "Authorization", required = false) String token);
 
     @PostMapping
     UserDTO saveUser(@RequestBody UserDTO userDTO);
@@ -22,27 +22,27 @@ public interface UserClient {
 
     @DeleteMapping("/{email}")
     void deleteUserByEmail(@PathVariable String email,
-                           @RequestHeader("Authorization") String token);
+                           @RequestHeader(value = "Authorization", required = false) String token);
 
     @PutMapping
     UserDTO updateUser(@RequestBody UserDTO userDTO,
-                       @RequestHeader("Authorization") String token);
+                       @RequestHeader(value = "Authorization", required = false) String token);
 
     @PostMapping("/phoneNumber")
     PhoneNumberDTO addToPhoneNumber(@RequestBody PhoneNumberDTO phoneNumberDTO,
-                                    @RequestHeader("Authorization") String token);
+                                    @RequestHeader(value = "Authorization", required = false) String token);
 
     @PutMapping("/phoneNumber")
     PhoneNumberDTO updatePhoneNumber(@RequestBody PhoneNumberDTO phoneNumberDTO,
                                      @RequestParam("id") Long id,
-                                     @RequestHeader("Authorization") String token);
+                                     @RequestHeader(value = "Authorization", required = false) String token);
 
     @PostMapping("/address")
     AddressDTO addToAddress(@RequestBody AddressDTO addressDTO,
-                            @RequestHeader("Authorization") String token);
+                            @RequestHeader(value = "Authorization", required = false) String token);
 
     @PutMapping("/address")
     AddressDTO updateAddress(@RequestBody AddressDTO addressDTO,
                              @RequestParam("id") Long id,
-                             @RequestHeader("Authorization") String token);
+                             @RequestHeader(value = "Authorization", required = false) String token);
 }

@@ -1,6 +1,5 @@
 package com.javanauta.bfftaskscheduler.controller;
 
-
 import com.javanauta.bfftaskscheduler.business.TaskService;
 import com.javanauta.bfftaskscheduler.business.dto.TaskDTO;
 import com.javanauta.bfftaskscheduler.infrastructure.enums.NotificationStatusEnum;
@@ -10,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +21,10 @@ import java.util.List;
 @RequestMapping("/task")
 @RequiredArgsConstructor
 @Tag(name = "Tasks", description = "User task registration")
-@SecurityRequirement(name = SecurityConfig.SECURITY_SCHEME)
+@SecurityRequirement(name = SecurityConfig.SECURITY_SCHEME) /* Part of Security config*/
 public class TaskController {
 
+    @Autowired
     private TaskService taskService;
 
     @PostMapping
@@ -31,7 +32,7 @@ public class TaskController {
     @ApiResponse(responseCode = "200", description = "Task success saved")
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO,
-                                              @RequestHeader("Authorization") String token) {
+                                              @RequestHeader(value = "Authorization", required = false) String token) {
         return ResponseEntity.ok(taskService.saveTask(token, taskDTO));
     }
 
@@ -42,7 +43,7 @@ public class TaskController {
     public ResponseEntity<List<TaskDTO>> findListTaskByPeriod(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
-            @RequestHeader("Authorization") String token){
+            @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(taskService.findTaskSchedulerByPeriod(startDate, endDate, token));
     }
 
@@ -52,7 +53,7 @@ public class TaskController {
     @ApiResponse(responseCode = "200", description = "Tasks Found")
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<List<TaskDTO>> findListByEmail(
-            @RequestHeader("Authorization") String token) {
+            @RequestHeader(value = "Authorization", required = false) String token) {
         List<TaskDTO> tasks = taskService.findTasksByEmail(token);
 
         return ResponseEntity.ok(tasks);
@@ -63,7 +64,7 @@ public class TaskController {
     @ApiResponse(responseCode = "200", description = "Tasks Deleted")
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<Void> deleteTask(@RequestParam("id") String id,
-                                           @RequestHeader("Authorization") String token) {
+                                           @RequestHeader(value = "Authorization", required = false) String token) {
         taskService.deleteTaskById(id, token);
         return ResponseEntity.ok().build();
     }
@@ -75,7 +76,7 @@ public class TaskController {
     public ResponseEntity<TaskDTO> updateStatusNotification(
             @RequestParam("status") NotificationStatusEnum statusEnum,
             @RequestParam("id") String id,
-            @RequestHeader("Authorization") String token){
+            @RequestHeader(value = "Authorization", required = false) String token){
 
         return ResponseEntity.ok(taskService.updateStatus(statusEnum, id, token));
     }
@@ -86,7 +87,7 @@ public class TaskController {
     @ApiResponse(responseCode = "500", description = "Server error")
     public ResponseEntity<TaskDTO> updateTask(@RequestBody TaskDTO dto,
                                               @RequestParam("id") String id,
-                                              @RequestHeader("Authorization") String token){
+                                              @RequestHeader(value = "Authorization", required = false) String token){
         return ResponseEntity.ok(taskService.updateTask(dto, id, token));
     }
 
